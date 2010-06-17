@@ -39,6 +39,6 @@
 (if (>= emacs-major-version 23)
     (set-frame-font "DejaVu Sans Mono-12"))
 
-(nav)
+
 
 
