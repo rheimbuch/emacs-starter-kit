@@ -20,25 +20,3 @@
 (setq org-todo-keywords
       '((sequence "TODO" "WORKINGON" "ONHOLD" "|" "DONE")
         (sequence "|" "CANCELED")))
-
-;; Emacs Behavior Mods
-
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
-
-(when (fboundp 'winner-mode)
-      (winner-mode 1))
-
-(require 'color-theme)
-(color-theme-initialize)
-;;(color-theme-deep-blue)
-;;(color-theme-comidia)
-(color-theme-calm-forest)
-
-
-(if (>= emacs-major-version 23)
-    (set-frame-font "DejaVu Sans Mono-12"))
-
-
-
-
