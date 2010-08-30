@@ -1,3 +1,5 @@
+(require 'rvm)
+
 (add-hook 'ruby-mode-hook
 	  (lambda ()
 	    (define-key ruby-mode-map "\C-c#" 'comment-or-uncomment-region)
