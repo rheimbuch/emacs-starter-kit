@@ -2,14 +2,28 @@
 ;; Load Development Org-mode
 
 (add-to-list 'load-path (concat dotfiles-dir "ryan/org-mode/lisp"))
+(add-to-list 'load-path (concat dotfiles-dir "ryan/org-mode/contrib/lisp"))
 (require 'org-install)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org-Mode Configuration
 
+
 (setq org-directory "~/Dropbox/notes/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-startup-indented t)
+
+(require 'org-latex)
+(require 'org-bibtex)
+(require 'org-exp-bibtex)
+
+
+;; Handle Bibtex processing on pdf export
+(setq org-latex-to-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %b"
+        "bibtex %b"
+        "pdflatex -interaction nonstopmode -output-directory %o %b"
+        "pdflatex -interaction nonstopmode -output-directory %o %b"))
 
 ;; ;; Converted remember templates to org-capture.
 ;; ;; See: M-x customize-variable org-capture-templates
@@ -35,6 +49,18 @@
 
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Setup Reftex integration
+
+(defun org-mode-reftex-setup ()
+  (load-library "reftex")
+  (and (buffer-file-name)
+       (file-exists-p (buffer-file-name))
+       (reftex-parse-all))
+  (define-key org-mode-map (kbd "C-c )") 'reftex-citation))
+(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Compile Development Org-mode without make/install
