@@ -1,0 +1,5 @@
+(add-to-list 'load-path (concat dotfiles-dir "ryan/sticky-windows"))
+(require 'sticky-windows)
+(global-set-key [(control x) (?0)] 'sticky-window-delete-window)
+(global-set-key [(control x) (?1)] 'sticky-window-delete-other-windows)
+(global-set-key [(control x) (?9)] 'sticky-window-keep-window-visible)
