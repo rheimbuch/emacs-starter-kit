@@ -4,6 +4,7 @@
 ;;(color-theme-comidia)
 ;; (color-theme-calm-forest)
 (color-theme-tangotango)
+;;(color-theme-solarized-dark)
 
 
 (if (>= emacs-major-version 23)
