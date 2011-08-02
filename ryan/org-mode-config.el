@@ -19,9 +19,52 @@
 (require 'org-bibtex)
 (require 'org-exp-bibtex)
 
+(setq org-export-latex-listings 'listings)
+(add-to-list 'org-export-latex-packages-alist '("" "listings"))
+(add-to-list 'org-export-latex-packages-alist '("" "color"))
+
+(add-to-list 'org-export-latex-classes
+             '("koma-article"
+               "\\documentclass{scrartcl}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\praragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(add-to-list 'org-export-latex-classes
+             '("koma-report"
+               "\\documentclass{scrreprt}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\praragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+;; active Babel Languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (R . t)
+   (clojure . t)
+   (python . t)
+   (ruby . t)
+   ))
+
+;; auto evaled languages
+(defun my-org-confirm-babel-evaluate (lang body)
+  (not (or
+        (string= lang "ditaa")
+        (string= lang "ruby")
+        (string= lang "emacs-lisp")
+        (string= lang "elisp")
+        (string= lang "python"))))
+
+(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 
 ;; Export ical format using UTC time
 (setq org-icalendar-use-UTC-date-time t)
+(setq org-combined-agenda-icalendar-file "~/Dropbox/MobileOrg/agenda.ics")
 
 ;; Handle Bibtex processing on pdf export
 (setq org-latex-to-pdf-process
@@ -52,6 +95,7 @@
       '((sequence "TODO" "WORKINGON" "ONHOLD" "|" "DONE")
         (sequence "|" "CANCELED")))
 
+;; Activate Clock In/Out
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 
